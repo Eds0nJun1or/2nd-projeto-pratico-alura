@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  server_nginx:
+    image: nginx
+    container_name: server_nginx
+    ports:
+      - "80:80"          # Mapeia a porta 80 do host para a porta 80 do container
+      - "8001:8001"      # Mapeia a porta 8001 do host para a porta 8001 do container (opcional)
+      - "8002:8002"      # Mapeia a porta 8002 do host para a porta 8002 do container (opcional)
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro  # Monta o arquivo de configuração (read-only)
+      - ./nginx/html:/usr/share/nginx/html         # Pasta raiz para documentos HTML
+      - ./nginx/servidores/microservicos/html:/usr/share/nginx/microservicos/html  # Pasta raiz para microserviço html
+      # Configurações de microserviço (opcionais):
+      - ./nginx/servidores/microservicos/noticias.conf:/etc/nginx/noticias.conf  # Arquivo de configuração do microserviço noticias (opcional)
+      - ./nginx/servidores/microservicos/novidades.conf:/etc/nginx/novidades.conf  # Arquivo de configuração do microserviço novidades (opcional)
+      - ./nginx/servidores/microservicos/noticias/html:/usr/share/nginx/microservicos/noticias/html  # Pasta raiz para arquivos HTML do microserviço noticias (opcional)
+      - ./nginx/servidores/microservicos/novidades/html:/usr/share/nginx/microservicos/novidades/html  # Pasta raiz para arquivos HTML do microserviço novidades (opcional)
